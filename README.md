@@ -12,22 +12,24 @@ The number on the right is rounded to two decimal places. The second line is the
 
 ## Install with Homebrew
 
-Homebrew builds the `main` branch of this repository. Commit or stash local edits first, then from the repository root:
+From the repository root, on the `main` branch, with a clean work tree:
 
 ```sh
 ./scripts/install-homebrew.sh
 ```
 
-The script taps the checkout as `coinconvert/coinconvert` and installs the formula with `--HEAD`. After that, `coinconvert` is on your `PATH`.
+The script taps this checkout as `coinconvert/coinconvert` and installs the formula. Apple silicon macOS 27 installs the bottled binary in `bottles/`, which does not compile. After that, `coinconvert` is on your `PATH`.
 
 The same steps by hand:
 
 ```sh
 brew tap coinconvert/coinconvert "$(pwd)"
-HOMEBREW_NO_AUTO_UPDATE=1 brew install --HEAD --formula coinconvert/coinconvert/coinconvert
+HOMEBREW_NO_AUTO_UPDATE=1 brew install --formula coinconvert/coinconvert/coinconvert
 ```
 
-Upgrade after new commits by running the script again. It retaps the checkout and reinstalls `HEAD`.
+`brew install --HEAD --formula coinconvert/coinconvert/coinconvert` builds `main` from source. That path needs the Xcode version Homebrew requires for this macOS release. `make` in this repository uses the system compiler directly and does not apply that check.
+
+Run the script again after new commits. It retaps the checkout and reinstalls.
 
 Check the offline parts of the formula:
 

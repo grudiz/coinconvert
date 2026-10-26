@@ -34,9 +34,9 @@ export HOMEBREW_NO_ASK=1
 
 formula="coinconvert/coinconvert/coinconvert"
 if brew list --formula coinconvert >/dev/null 2>&1; then
-    brew reinstall --HEAD --formula --yes "$formula"
+    brew reinstall --formula --yes "$formula"
 else
-    brew install --HEAD --formula --yes "$formula"
+    brew install --formula --yes "$formula"
 fi
 
 echo "Installed: $(command -v coinconvert)"
