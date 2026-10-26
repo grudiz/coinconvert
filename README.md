@@ -31,11 +31,7 @@ HOMEBREW_NO_AUTO_UPDATE=1 brew install --formula coinconvert/coinconvert/coincon
 
 Run the script again after new commits. It retaps the checkout and reinstalls.
 
-Check the offline parts of the formula:
-
-```sh
-brew test coinconvert/coinconvert/coinconvert
-```
+The formula's test runs `coinconvert --list-providers`, `--list-currencies`, and `--version`. Homebrew still checks the Xcode version before `brew test`, so on a machine it refuses to compile for, run those three commands directly. `make test` covers the parser, the crosses, and the command output without the network.
 
 ## Build from source
 

@@ -7,7 +7,7 @@ class Coinconvert < Formula
   # Source and bottle live in this repository. A local tap makes both file
   # URLs point at the tap checkout, so `brew install` does not need a forge.
   url "file://#{File.expand_path("../bottles/coinconvert-1.0.0.tar.gz", __dir__)}"
-  sha256 "6105e4a94a3a54008e99d52ed1102f6592186addb9b2363158b0d3e274fe4994"
+  sha256 "b6ce560272364e0edd6444d3ee229371c2520f109bbaad5b09e621a95451c0bc"
 
   bottle do
     root_url "file://#{File.expand_path("../bottles", __dir__)}"
