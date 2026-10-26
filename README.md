@@ -12,26 +12,36 @@ The number on the right is rounded to two decimal places. The second line is the
 
 ## Install with Homebrew
 
-From the repository root, on the `main` branch, with a clean work tree:
+Install [Homebrew](https://brew.sh) first. You do not need to clone this repository or compile it yourself. Homebrew downloads the version 1.0.0 source archive from GitHub and builds it. The build uses the Xcode or Command Line Tools version Homebrew requires for your macOS release. libcurl comes from macOS.
 
 ```sh
-./scripts/install-homebrew.sh
+brew install grudiz/tap/coinconvert
 ```
 
-The script taps this checkout as `coinconvert/coinconvert` and installs the formula. Apple silicon macOS 27 installs the bottled binary in `bottles/`, which does not compile. After that, `coinconvert` is on your `PATH`.
+That command taps `grudiz/homebrew-tap` and links `coinconvert` onto your `PATH`. The tap is a separate public repository, `https://github.com/grudiz/homebrew-tap`, and its `Formula/coinconvert.rb` is the formula in this repository.
 
-The same steps by hand:
+`scripts/install-homebrew.sh` runs that same command. It does not read the local checkout, and it does not remove an existing install:
 
 ```sh
-brew tap coinconvert/coinconvert "$(pwd)"
-HOMEBREW_NO_AUTO_UPDATE=1 brew install --formula coinconvert/coinconvert/coinconvert
+sh scripts/install-homebrew.sh
 ```
 
-`brew install --HEAD --formula coinconvert/coinconvert/coinconvert` builds `main` from source. That path needs the Xcode version Homebrew requires for this macOS release. `make` in this repository uses the system compiler directly and does not apply that check.
+To build the current `main` branch instead of version 1.0.0:
 
-Run the script again after new commits. It retaps the checkout and reinstalls.
+```sh
+brew install --HEAD grudiz/tap/coinconvert
+```
 
-The formula test converts a currency to itself (`coinconvert xmr 1 xmr`). That path does not use the network. It also checks that an unknown currency fails. Homebrew still checks the Xcode version before `brew test`, so on a machine it refuses to compile for, run `coinconvert xmr 1 xmr` directly. `make test` covers the parser, the crosses, and the command output without the network.
+`brew test coinconvert` checks an offline conversion of a currency to itself and an unknown-currency error. `make test` in a clone covers the parser, the crosses, and the command output without the network.
+
+### Uninstall
+
+```sh
+brew uninstall coinconvert
+brew untap grudiz/tap
+```
+
+Uninstall the formula before untapping. Homebrew refuses to remove a tap that still has one of its formulae installed.
 
 ## Build from source
 

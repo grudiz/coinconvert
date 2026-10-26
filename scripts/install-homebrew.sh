@@ -1,42 +1,16 @@
 #!/bin/sh
-# Install the committed HEAD of this repository with Homebrew.
+# Install coinconvert with Homebrew. This does not need a clone of the source.
 set -eu
 
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_INSTALL_FROM_API=1
-export HOMEBREW_NO_ENV_HINTS=1
-export HOMEBREW_NO_ASK=1
-
-cd "$(dirname "$0")/.."
-ROOT=$(pwd)
-
-if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    echo "coinconvert: initialize the git repository before installing with Homebrew." >&2
+if ! command -v brew >/dev/null 2>&1; then
+    echo "coinconvert: Homebrew is required. Install it from https://brew.sh and run this script again." >&2
     exit 1
 fi
 
-branch=$(git rev-parse --abbrev-ref HEAD)
-if [ "$branch" != "main" ]; then
-    echo "coinconvert: Homebrew installs the main branch (current branch is $branch)." >&2
-    exit 1
-fi
-
-if [ -n "$(git status --porcelain)" ]; then
-    echo "coinconvert: commit or stash changes first. Homebrew builds the committed main branch." >&2
-    exit 1
-fi
-
-if brew tap 2>/dev/null | grep -qx "coinconvert/coinconvert"; then
-    brew untap coinconvert/coinconvert
-fi
-
-brew tap coinconvert/coinconvert "$ROOT"
-
-formula="coinconvert/coinconvert/coinconvert"
 if brew list --formula coinconvert >/dev/null 2>&1; then
-    brew reinstall --formula --yes "$formula"
-else
-    brew install --formula --yes "$formula"
+    echo "coinconvert is already installed: $(command -v coinconvert)"
+    exit 0
 fi
 
+brew install grudiz/tap/coinconvert
 echo "Installed: $(command -v coinconvert)"
