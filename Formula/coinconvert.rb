@@ -1,6 +1,6 @@
 class Coinconvert < Formula
   desc "Convert cryptocurrency and fiat amounts using live exchange rates"
-  homepage "https://github.com/coinconvert/coinconvert"
+  homepage "https://github.com/grudiz/coinconvert"
   url "file://#{File.expand_path("../bottles/coinconvert-1.0.0.tar.gz", __dir__)}"
   version "1.0.0"
   sha256 "e2cd0097b05cffa7bc5cea1c7b6984acc0315dc88ecc0f2ef5f8aa95771a7af0"
