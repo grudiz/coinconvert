@@ -2,6 +2,11 @@
 # Install the committed HEAD of this repository with Homebrew.
 set -eu
 
+export HOMEBREW_NO_AUTO_UPDATE=1
+export HOMEBREW_NO_INSTALL_FROM_API=1
+export HOMEBREW_NO_ENV_HINTS=1
+export HOMEBREW_NO_ASK=1
+
 cd "$(dirname "$0")/.."
 ROOT=$(pwd)
 
@@ -26,11 +31,6 @@ if brew tap 2>/dev/null | grep -qx "coinconvert/coinconvert"; then
 fi
 
 brew tap coinconvert/coinconvert "$ROOT"
-
-export HOMEBREW_NO_AUTO_UPDATE=1
-export HOMEBREW_NO_INSTALL_FROM_API=1
-export HOMEBREW_NO_ENV_HINTS=1
-export HOMEBREW_NO_ASK=1
 
 formula="coinconvert/coinconvert/coinconvert"
 if brew list --formula coinconvert >/dev/null 2>&1; then
