@@ -31,7 +31,7 @@ HOMEBREW_NO_AUTO_UPDATE=1 brew install --formula coinconvert/coinconvert/coincon
 
 Run the script again after new commits. It retaps the checkout and reinstalls.
 
-The formula's test runs `coinconvert --list-providers`, `--list-currencies`, and `--version`. Homebrew still checks the Xcode version before `brew test`, so on a machine it refuses to compile for, run those three commands directly. `make test` covers the parser, the crosses, and the command output without the network.
+The formula test converts a currency to itself (`coinconvert xmr 1 xmr`). That path does not use the network. It also checks that an unknown currency fails. Homebrew still checks the Xcode version before `brew test`, so on a machine it refuses to compile for, run `coinconvert xmr 1 xmr` directly. `make test` covers the parser, the crosses, and the command output without the network.
 
 ## Build from source
 

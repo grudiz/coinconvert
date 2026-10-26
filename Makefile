@@ -1,5 +1,7 @@
 CXX ?= c++
-CXXFLAGS ?= -std=c++17 -O2 -Wall -Wextra -Wpedantic
+# Homebrew exports CXXFLAGS, so a conditional assignment would drop -std=c++17.
+CXXFLAGS ?= -O2 -Wall -Wextra -Wpedantic
+CXXFLAGS += -std=c++17
 CPPFLAGS += -Isrc
 LDFLAGS ?=
 
@@ -32,7 +34,7 @@ LIB_OBJ := $(patsubst src/%.cpp,build/%.o,$(LIB_SRC))
 all: build/coinconvert
 
 build/coinconvert: build/main.o $(LIB_OBJ)
-	$(CXX) $(CXXFLAGS) -o $@ build/main.o $(LIB_OBJ) $(CURL_LIBS) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $@ build/main.o $(LIB_OBJ) $(CURL_LIBS)
 
 build/%.o: src/%.cpp
 	@mkdir -p build
@@ -40,7 +42,7 @@ build/%.o: src/%.cpp
 
 build/tests: tests/test_coinconvert.cpp $(LIB_OBJ)
 	@mkdir -p build
-	$(CXX) $(CXXFLAGS) $(CPPFLAGS) -o $@ tests/test_coinconvert.cpp $(LIB_OBJ) $(CURL_LIBS) $(LDFLAGS)
+	$(CXX) $(CXXFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ tests/test_coinconvert.cpp $(LIB_OBJ) $(CURL_LIBS)
 
 test: build/tests
 	./build/tests
